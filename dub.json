@@ -1,0 +1,31 @@
+{
+    "name": "vectorflow",
+    "description": "Minimalist neural network library for sparse data",
+    "copyright": "Copyright: 2017 Netflix, Inc.",
+    "license": "Apache-2.0",
+    "authors": ["Netflix"],
+    "configurations": [
+      {
+        "name": "lib",
+        "targetName": "vectorflow",
+        "targetType": "library",
+        "excludedSourceFiles": [
+          "test/*.d",
+          "examples/*.d"
+        ]
+      },
+      {
+        "name": "unittest",
+        "targetType": "library",
+        "sourcePaths": [
+          "test"
+        ],
+        "importPaths": [
+          "test"
+        ],
+        "excludedSourceFiles": [
+          "examples/*.d"
+        ]
+      }
+    ]
+}

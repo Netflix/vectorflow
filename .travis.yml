@@ -1,0 +1,10 @@
+sudo: false
+os:
+ - linux
+ - osx
+language: d
+d:
+ - ldc
+ - ldc-1.1.1
+ - dmd
+ - dmd-2.073.1
