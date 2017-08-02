@@ -1,6 +1,7 @@
 <img src="http://ae.nflximg.net/vectorflow/vectorflow_logo.png" width="200">
 
 **Vectorflow** is a minimalist neural network library optimized for sparse data and single machine environments.
+Original blog post [here](https://medium.com/@NetflixTechBlog/introducing-vectorflow-fe10d7f126b8).
 
 ### Installation
 
