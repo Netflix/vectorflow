@@ -23,7 +23,7 @@ Tested on:
 
 #### Setting up a D environment 
 If you're new to [D](http://dlang.org/), keep reading. You will need `dub` (the D package manager) and `LDC` (the LLVM-based D compiler).
-##### macOs
+##### macOS
 ```
 brew install dub
 brew install ldc
