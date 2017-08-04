@@ -302,7 +302,7 @@ class DropOut : NeuralLayer {
 
     void _predict_dense()
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(p; parents)
         {
             out_d[offset.. offset + p.dim_out] = p.out_d[];
@@ -314,7 +314,7 @@ class DropOut : NeuralLayer {
     {
         // @TODO: this is currently very slow because of allocations
         out_s.length = 0;
-        ulong offset = 0;
+        ulong offset;
         foreach(p; parents)
         {
             foreach(ref f; p.out_s)
@@ -328,7 +328,7 @@ class DropOut : NeuralLayer {
 
     void _predict_train_dense()
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(p; parents)
         {
             foreach(i; 0..p.dim_out)
@@ -358,7 +358,7 @@ class DropOut : NeuralLayer {
     {
         if(grad.length == 0)
             return;
-        ulong offset = 0;
+        ulong offset;
         foreach(ip, ref p; parents)
         {
             if(parents[ip].type == LayerT.SPARSE)
@@ -450,7 +450,7 @@ class ReLU : NeuralLayer {
 
     override void predict()
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(p; parents)
         {
             relu(p.out_d, out_d[offset..offset+p.dim_out]);
@@ -465,7 +465,7 @@ class ReLU : NeuralLayer {
         pragma(inline, true)
         @fastmath static void _relu_op(float[] b, float[] o, float[] g) pure
         {
-            for(int i = 0; i < o.length; ++i)
+            for(int i; i < o.length; ++i)
             {
                 if(o[i] > 0)
                     b[i] += g[i];
@@ -476,7 +476,7 @@ class ReLU : NeuralLayer {
     override void accumulate_grad(V)(V[] grad)
         if ((is(V == float) || is(V == SparseF)))
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(ip, ref p; parents)
         {
             version(LDC)
@@ -536,7 +536,7 @@ class TanH : NeuralLayer {
 
     override void predict()
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(p; parents)
         {
             tanh(p.out_d, out_d[offset..offset + p.dim_out]);
@@ -546,7 +546,7 @@ class TanH : NeuralLayer {
 
     override void accumulate_grad(float[] grad)
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(ip, ref p; parents)
         {
             // todo: fixme when I have multiple children, should accumulate, not override
@@ -608,7 +608,7 @@ class SeLU : NeuralLayer {
 
     override void predict()
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(p; parents)
         {
             foreach(j; 0..p.dim_out)
@@ -622,7 +622,7 @@ class SeLU : NeuralLayer {
 
     override void accumulate_grad(float[] grad)
     {
-        ulong offset = 0;
+        ulong offset;
         foreach(ip, ref p; parents)
         {
             foreach(j; 0..p.dim_out)

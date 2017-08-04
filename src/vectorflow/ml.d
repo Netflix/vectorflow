@@ -115,7 +115,7 @@ float[] histogram(D)(D vals, ushort num_bins, float bin_min, float bin_max,
 
     foreach(ref v; vals)
     {
-        ulong bin_ind = 0;
+        ulong bin_ind;
         while(bin_ind < bins_left_bound.length && v >= bins_left_bound[bin_ind])
             ++bin_ind;
         if(bin_ind < bins_left_bound.length)

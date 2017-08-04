@@ -45,7 +45,7 @@ auto allocate_matrix_zero(T)(ulong num_row, ulong num_col)
 long to_long(T)(in T str) pure
     if(isSomeString!T)
 {
-    long val = 0;
+    long val;
     foreach(c; str)
         val = 10 * val + (c - '0');
     return val;
@@ -68,13 +68,13 @@ float to_float(T)(in T p) pure
         [ 1e+4096L,1e+2048L,1e+1024L,1e+512L,1e+256L,1e+128L,1e+64L,1e+32L,
                 1e+16L,1e+8L,1e+4L,1e+2L,1e+1L ];
 
-    int ind = 0;
+    int ind;
     ulong len = p.length;
 
     float ldval = 0.0;
     char dot = 0;
-    int exp = 0;
-    long msdec = 0, lsdec = 0;
+    int exp;
+    long msdec, lsdec;
     ulong msscale = 1;
 
     char sign = 0;
@@ -151,7 +151,7 @@ float to_float(T)(in T p) pure
         ldval = ldval * msscale + lsdec;
     if (ldval)
     {
-        uint u = 0;
+        uint u;
         int pow = 4096;
 
         while (exp > 0)
@@ -232,7 +232,7 @@ final class Hasher {
       // tail
       const ubyte * tail = cast(const (ubyte*))(data + nblocks*4);
 
-      uint k1 = 0;
+      uint k1;
 
       switch(len & 3)
       {
