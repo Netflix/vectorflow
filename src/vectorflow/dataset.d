@@ -88,7 +88,7 @@ class MultiFilesReader(T)
 
     int opApply(scope int delegate(ref T) dg)
     {
-        int result = 0;
+        int result;
         if(readers[0]._cache.length == 0)
         {
             foreach(r; readers)
@@ -155,7 +155,7 @@ class MultiFilesReader(T)
 
     @property ulong length()
     {
-        ulong s = 0;
+        ulong s;
         foreach(r; readers)
             s += r.length;
         return s;
@@ -212,7 +212,7 @@ class DataReader(T)
 
     int opApply(scope int delegate(ref T) dg)
     {
-        int result = 0;
+        int result;
         static if(__traits(compiles, _obs.dup) || isBuiltinType!T)
         {
             if(_start_cache && _cache.length == 0)

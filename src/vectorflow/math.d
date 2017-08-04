@@ -36,20 +36,20 @@ mixin template Functions()
     static float dotProd(float[] x, float[] y) pure @nogc
     {
         float res = 0;
-        for(int i = 0; i < x.length; ++i)
+        for(int i; i < x.length; ++i)
             res += x[i] * y[i];
         return res;
     }
 
     static void relu(float[] x, float[] y) pure @nogc
     {
-        for(int i = 0; i < x.length; ++i)
+        for(int i; i < x.length; ++i)
             y[i] = fmax(0, x[i]);
     }
 
     static void axpy(float a, float[] x, float[] y) pure @nogc
     {
-        for(int i = 0; i < x.length; ++i)
+        for(int i; i < x.length; ++i)
             y[i] += a * x[i];
     }
 
@@ -61,7 +61,7 @@ mixin template Functions()
 
     static void tanh(float[] x, float[] y) pure @nogc
     {
-        for(int i = 0; i < x.length; ++i)
+        for(int i; i < x.length; ++i)
         {
             if(x[i] > 20)
                 y[i] = 1;

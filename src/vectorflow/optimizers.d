@@ -107,8 +107,8 @@ class SGDOptimizer : Optimizer {
                 grads.length = nn.output.length;
             }
 
-            ulong sum_num_features = 0;
-            ulong tmp_cnt = 0;
+            ulong sum_num_features;
+            ulong tmp_cnt;
             double sum_loss = 0.0;
             foreach(p; 0..num_epochs)
             {
@@ -331,7 +331,7 @@ class AdaGrad : SGDOptimizer {
         pragma(inline, true)
         @fastmath static void ada_op1(float[] row, float[] g) pure
         {
-            for(int i = 0; i < row.length; ++i)
+            for(int i; i < row.length; ++i)
                 row[i] += g[i] * g[i];
         }
 
@@ -339,7 +339,7 @@ class AdaGrad : SGDOptimizer {
         @fastmath static void ada_op2(float[] row, float[] g, float[] sg,
                 float lr_, float eps_) pure
         {
-            for(int i = 0; i < row.length; ++i)
+            for(int i; i < row.length; ++i)
             {
                 // reduces cache invalidation across cores
                 // since we're writing back to the shared weights
@@ -506,14 +506,14 @@ class ADAM : SGDOptimizer {
         pragma(inline, true)
         @fastmath static void adam_op(float[] row, float beta, float[] g) pure
         {
-            for(int i = 0; i < row.length; ++i)
+            for(int i; i < row.length; ++i)
                 row[i] = beta * row[i] + (1.0 - beta) * g[i];
         }
 
         pragma(inline, true)
         @fastmath static void adam_op2(float[] row, float beta, float[] g) pure
         {
-            for(int i = 0; i < row.length; ++i)
+            for(int i; i < row.length; ++i)
                 row[i] = beta * row[i] + (1.0 - beta) * g[i] * g[i];
         }
 
@@ -524,7 +524,7 @@ class ADAM : SGDOptimizer {
         {
             float k1 = 1.0/(1.0 - beta1_);
             float k2 = 1.0/(1.0 - beta2_);
-            for(int i = 0; i < row_W.length; ++i)
+            for(int i; i < row_W.length; ++i)
                 row_W[i] -= lr_ * k1 * row_M[i] / (sqrt(k2 * row_S[i]) + eps_);
         }
     }
