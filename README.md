@@ -29,10 +29,10 @@ brew install dub
 brew install ldc
 ```
 ##### Ubuntu
-`dub` can be downloaded [here](https://code.dlang.org/download) (or follow the instructions [on this page](http://blog.ljdelight.com/installing-dlang-dmd-dub-on-ubuntu/)).
-`LDC` can be installed by running:
 ```
-snap install --classic --edge ldc2
+apt-get install -y curl xz-utils
+curl -fsS https://dlang.org/install.sh | bash -s ldc
+source ~/dlang/ldc-{VERSION}/activate
 ```
 
 ### Examples
