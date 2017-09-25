@@ -609,15 +609,15 @@ class NeuralNet {
         auto ser = new Serializer(&f);
 
         // serialize root names
-        ser.write(roots.length);
+        ser.write(roots.length.to!ulong);
         foreach(r; roots)
             ser.write(r.name);
 
         // serialize edges
-        ser.write(edges.length);
+        ser.write(edges.length.to!ulong);
         foreach(p; edges.byKeyValue())
         {
-            ser.write(p.value.length);
+            ser.write(p.value.length.to!ulong);
             foreach(child; p.value)
             {
                 ser.write(p.key ~ "," ~ child); // parent,child

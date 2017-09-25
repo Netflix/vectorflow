@@ -36,7 +36,7 @@ class Linear : NeuralLayer {
 
     float[][] W;
     float[][] grad;
-    protected ulong _with_intercept;
+    protected size_t _with_intercept;
     final @property bool with_intercept(){return _with_intercept == 1;}
 
     AdditiveLinearPrior[] priors;
@@ -67,13 +67,13 @@ class Linear : NeuralLayer {
     override void allocate_params()
     {
         auto din = dim_in + _with_intercept;
-        W = allocate_matrix_zero!float(dim_out, din);
+        W = allocate_matrix_zero!float(dim_out, din.to!size_t);
     }
 
     override void allocate_grad_params()
     {
         auto din = dim_in + _with_intercept;
-        grad = allocate_matrix_zero!float(dim_out, din);
+        grad = allocate_matrix_zero!float(dim_out, din.to!size_t);
     }
 
     override void predict()
@@ -82,7 +82,7 @@ class Linear : NeuralLayer {
         {
             auto row = W[k];
             float dp = _with_intercept * row[0];
-            ulong offset = _with_intercept;
+            auto offset = _with_intercept;
             foreach(l; parents)
             {
                 final switch(l.type)
@@ -113,7 +113,7 @@ class Linear : NeuralLayer {
         }
 
         // now backprop gradient
-        ulong offset = _with_intercept;
+        auto offset = _with_intercept;
         foreach(i, ref b; backgrads)
         {
             if(parents[i].type == LayerT.SPARSE) // TODO: fixme
@@ -137,7 +137,7 @@ class Linear : NeuralLayer {
         }
 
         // now backprop gradient
-        ulong offset = _with_intercept;
+        auto offset = _with_intercept;
         foreach(i, ref b; backgrads)
         {
             if(parents[i].type == LayerT.SPARSE) // TODO: fixme
@@ -152,7 +152,7 @@ class Linear : NeuralLayer {
 
     final protected void _accumulate_grad_row(float[] row, float g, ulong index)
     {
-        ulong offset = _with_intercept;
+        auto offset = _with_intercept;
         foreach(l; parents)
         {
             final switch(l.type)
@@ -171,16 +171,16 @@ class Linear : NeuralLayer {
 
     override void serialize(Serializer s)
     {
-        s.write(_with_intercept);
-        s.write(W.length);
+        s.write(_with_intercept.to!ulong);
+        s.write(W.length.to!ulong);
         foreach(i; 0..W.length)
             s.write_vec(W[i]);
     }
 
     override void deserialize(Serializer s)
     {
-        _with_intercept = s.read!ulong();
-        W.length = s.read!ulong();
+        _with_intercept = s.read!ulong().to!size_t;
+        W.length = s.read!ulong().to!size_t;
         foreach(i; 0..W.length)
             W[i] = s.read_vec!float();
     }
@@ -302,7 +302,7 @@ class DropOut : NeuralLayer {
 
     void _predict_dense()
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(p; parents)
         {
             out_d[offset.. offset + p.dim_out] = p.out_d[];
@@ -328,7 +328,7 @@ class DropOut : NeuralLayer {
 
     void _predict_train_dense()
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(p; parents)
         {
             foreach(i; 0..p.dim_out)
@@ -358,7 +358,7 @@ class DropOut : NeuralLayer {
     {
         if(grad.length == 0)
             return;
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(ip, ref p; parents)
         {
             if(parents[ip].type == LayerT.SPARSE)
@@ -450,7 +450,7 @@ class ReLU : NeuralLayer {
 
     override void predict()
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(p; parents)
         {
             relu(p.out_d, out_d[offset..offset+p.dim_out]);
@@ -536,7 +536,7 @@ class TanH : NeuralLayer {
 
     override void predict()
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(p; parents)
         {
             tanh(p.out_d, out_d[offset..offset + p.dim_out]);
@@ -546,7 +546,7 @@ class TanH : NeuralLayer {
 
     override void accumulate_grad(float[] grad)
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(ip, ref p; parents)
         {
             // todo: fixme when I have multiple children, should accumulate, not override
@@ -608,7 +608,7 @@ class SeLU : NeuralLayer {
 
     override void predict()
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(p; parents)
         {
             foreach(j; 0..p.dim_out)
@@ -622,7 +622,7 @@ class SeLU : NeuralLayer {
 
     override void accumulate_grad(float[] grad)
     {
-        ulong offset = 0;
+        size_t offset = 0;
         foreach(ip, ref p; parents)
         {
             foreach(j; 0..p.dim_out)
@@ -789,7 +789,7 @@ class SparseKernelExpander : InputLayer
         {
             bool all_here = true;
             ulong ind_bag_feat = -1;
-            ulong size_bag = 1;
+            size_t size_bag = 1;
             foreach(ind_cf; 0..cf.length)
             {
                 auto num_hashes = here[cf[ind_cf]];

@@ -12,8 +12,8 @@ import vectorflow.dataset;
 unittest {
     class D : DataReader!ulong{
 
-        static auto _data = [1, 2, 3];
-        ulong _cnt = 0;
+        static ulong[] _data = [1, 2, 3];
+        size_t _cnt = 0;
 
         this(){_memory_size = 3 * 4;}
 
@@ -44,7 +44,7 @@ unittest {
 
     auto d = new D();
     assert(d.memory_size!"B".fequal(12));
-    auto sum = 0;
+    ulong sum = 0;
     foreach(v; d)
         sum += v;
     assert(sum == 6);

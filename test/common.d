@@ -26,7 +26,7 @@ struct ObsS {
     SparseF[] features;
 }
 
-ObsD[] fake_data_dense(ulong dim = 20, ulong samples = 100)
+ObsD[] fake_data_dense(size_t dim = 20, size_t samples = 100)
 {
     auto d = new ObsD[samples];
     foreach(i; 0..samples)
@@ -42,7 +42,7 @@ ObsD[] fake_data_dense(ulong dim = 20, ulong samples = 100)
     return d;
 }
 
-ObsS[] fake_data_sparse(ulong dim = 20, ulong samples = 100)
+ObsS[] fake_data_sparse(size_t dim = 20, size_t samples = 100)
 {
     auto res = new ObsS[samples];
     foreach(i; 0..samples)

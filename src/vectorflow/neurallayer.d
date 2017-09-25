@@ -45,9 +45,9 @@ abstract class NeuralLayer {
     LayerT type;
 
     /// total input dimension of this layer (sum of output dimensions of its parents)
-    ulong dim_in;
+    size_t dim_in;
     /// total output dimension of this layer
-    ulong dim_out;
+    size_t dim_out;
 
     /// array referencing all the children of this layer
     NeuralLayer[] children;
@@ -98,7 +98,7 @@ abstract class NeuralLayer {
     
     this(ulong dim_out_, LayerT type_)
     {
-        dim_out = dim_out_;
+        dim_out = dim_out_.to!size_t;
         dim_in = 0;
         set_type(type_);
     }
@@ -162,8 +162,8 @@ abstract class NeuralLayer {
     {
         s.write(this.classinfo.name);
         s.write(name);
-        s.write(dim_in);
-        s.write(dim_out);
+        s.write(dim_in.to!ulong);
+        s.write(dim_out.to!ulong);
         s.write(type.to!string);
         serialize(s);
     }
@@ -171,8 +171,8 @@ abstract class NeuralLayer {
     void deser(Serializer s)
     {
         name = s.read!string();
-        dim_in = s.read!ulong();
-        dim_out = s.read!ulong();
+        dim_in = s.read!ulong().to!size_t;
+        dim_out = s.read!ulong().to!size_t;
         type = s.read!string().to!LayerT;
         
         deserialize(s);
