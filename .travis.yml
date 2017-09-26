@@ -8,3 +8,11 @@ d:
  - ldc-1.1.1
  - dmd
  - dmd-2.073.1
+env:
+ - ARCH="x86_64"
+matrix:
+  include:
+    - {os: linux, d: ldc, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib]]}}}
+    - {os: linux, d: dmd, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib]]}}}
+script:
+ - dub test --arch "$ARCH"

@@ -137,7 +137,7 @@ class L2Prior : AdditiveLinearPrior
 
         pragma(inline, true)
         @fastmath static void l2op_scal(float a, float[] x, float[] x2,
-                float[] y, ulong start) pure
+                float[] y, size_t start) pure
         {
             for(auto i = start; i < x.length; ++i)
                 y[i] += a * (x[i] - x2[i]);
@@ -145,7 +145,7 @@ class L2Prior : AdditiveLinearPrior
 
         pragma(inline, true)
         @fastmath static void l2op_vec(float[] a, float[] x, float[] x2,
-                float[] y, ulong start) pure
+                float[] y, size_t start) pure
         {
             for(auto i = start; i < x.length; ++i)
                 y[i] += a[i] * (x[i] - x2[i]);
