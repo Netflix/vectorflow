@@ -82,7 +82,7 @@ class L2Prior : AdditiveLinearPrior
     float[] _lambdas;
     float[][] W_prior;
 
-    protected ulong _ind_start;
+    protected size_t _ind_start;
 
     void delegate() _accumulate_grad;
 
@@ -137,7 +137,7 @@ class L2Prior : AdditiveLinearPrior
 
         pragma(inline, true)
         @fastmath static void l2op_scal(float a, float[] x, float[] x2,
-                float[] y, ulong start) pure
+                float[] y, size_t start) pure
         {
             for(auto i = start; i < x.length; ++i)
                 y[i] += a * (x[i] - x2[i]);
@@ -145,7 +145,7 @@ class L2Prior : AdditiveLinearPrior
 
         pragma(inline, true)
         @fastmath static void l2op_vec(float[] a, float[] x, float[] x2,
-                float[] y, ulong start) pure
+                float[] y, size_t start) pure
         {
             for(auto i = start; i < x.length; ++i)
                 y[i] += a[i] * (x[i] - x2[i]);
@@ -216,7 +216,7 @@ class L1Prior : ProxyLinearPrior
     float _lambda;
     float[][] W_prior;
 
-    protected ulong _ind_start;
+    protected size_t _ind_start;
 
     this(float lambda)
     {
@@ -285,7 +285,7 @@ auto l2 = Linear(10).prior(PositivePrior(1e-3));
 */
 class PositivePrior : ProxyLinearPrior
 {
-    protected ulong _ind_start;
+    protected size_t _ind_start;
     protected float _eps;
 
     this()
@@ -344,8 +344,8 @@ class RotationPrior : AdditiveLinearPrior
     {
         foreach(_; 0.._num_draws)
         {
-            ulong i = uniform(0, W.length, RAND_GEN);
-            ulong j = uniform(0, W.length, RAND_GEN);
+            size_t i = uniform(0, W.length, RAND_GEN);
+            size_t j = uniform(0, W.length, RAND_GEN);
 
             auto ri = W[i];
             auto rj = W[j];

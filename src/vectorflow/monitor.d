@@ -26,7 +26,7 @@ class SGDMonitor {
 
     bool verbose;
     ulong num_epochs;
-    ulong num_cores;
+    uint num_cores;
     bool with_loss;
     MonoTime start_time;
     MonoTime last_time;
@@ -93,7 +93,7 @@ class SGDMonitor {
     private char[] get_progress_bar(float percentage)
     {
         _bar_buff[1..51] = ' ';
-        auto num_finished = lround(percentage * 50);
+        auto num_finished = lround(percentage * 50).to!size_t;
         if(num_finished >= 1)
             _bar_buff[1..num_finished+1] = 'o';
         auto end = sformat(_bar_buff[52..100],
@@ -111,7 +111,7 @@ class SGDMonitor {
                     ds.hours, ds.minutes, ds.seconds);
     }
 
-    void progress_callback(ulong core_id, ulong epoch, ulong num_examples,
+    void progress_callback(uint core_id, ulong epoch, ulong num_examples,
             ulong num_features, double sum_loss)
     {
         if(!verbose)

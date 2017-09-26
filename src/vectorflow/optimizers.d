@@ -89,7 +89,7 @@ class SGDOptimizer : Optimizer {
         auto monitor = new SGDMonitor(verbose, num_epochs, num_cores,
                 start_time, isNumeric!S);
         
-        void _learn(U)(NeuralNet net, U d, ulong n_passes, ulong core_id)
+        void _learn(U)(NeuralNet net, U d, ulong n_passes, uint core_id)
         {
             foreach(l; net.layers)
                 l.pre_learning();
@@ -194,14 +194,14 @@ class SGDOptimizer : Optimizer {
             foreach(i, chunk; pool.parallel(chunks))
             {
                 auto net = nets[i];
-                _learn(net, chunk, num_epochs, i);
+                _learn(net, chunk, num_epochs, i.to!uint);
             }
             pool.stop();
         }
         monitor.wrap_up();
     }
 
-    abstract float current_lr(ulong k, ulong j);
+    abstract float current_lr(size_t k, size_t j);
 
     abstract void register(NeuralLayer layer);
 
@@ -319,7 +319,7 @@ class AdaGrad : SGDOptimizer {
     }
 
     pragma(inline, true)
-    override float current_lr(ulong k, ulong j)
+    override float current_lr(size_t k, size_t j)
     {
         return lr / sqrt(eps + acc_grad[k][j]);
     }
@@ -495,7 +495,7 @@ class ADAM : SGDOptimizer {
     }
 
     pragma(inline, true)
-    override float current_lr(ulong k, ulong j)
+    override float current_lr(size_t k, size_t j)
     {
         return lr / (eps + sqrt(S[k][j] / (1.0 - beta2)));
     }
@@ -597,7 +597,7 @@ class ShadowSGDOptimizer : SGDOptimizer {
         super(num_epochs, 1, 0.0);
     }
 
-    override float current_lr(ulong k, ulong j){return 0.0f;}
+    override float current_lr(size_t k, size_t j){return 0.0f;}
     override void register(NeuralLayer layer){}
     override void update(NeuralLayer layer, float[] ext_grad){}
     override void update(NeuralLayer layer, SparseF[] ext_grad){}

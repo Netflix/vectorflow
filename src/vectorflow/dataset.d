@@ -193,7 +193,7 @@ class MultiFilesReader(T)
 class DataReader(T)
 {
     protected T _obs;
-    protected ulong _length;
+    protected size_t _length;
 
     T[] _cache;
     protected bool _start_cache;
@@ -276,7 +276,7 @@ class DataReader(T)
 
     abstract void rewind();
 
-    @property ulong length()
+    @property size_t length()
     {
         if(_length == -1)
         {
