@@ -39,7 +39,7 @@ auto load_data()
     {
         auto root_url = "http://ae.nflximg.net/vectorflow/";
         auto url_data = root_url ~ "lyrl2004_vectors_";
-        auto url_topics = root_url ~ "rcv1v2.topics.qrels.gz"; 
+        auto url_topics = root_url ~ "rcv1v2.topics.qrels.gz";
         mkdir(data_dir);
         import std.net.curl;
         import std.process;
@@ -135,7 +135,7 @@ class RCV1Reader : DataFileReader!(Obs) {
             auto feat_val = to_float(t[feat_id_end+1..$]);
             features_buff[cnt++] = SparseF(feat_id, feat_val);
         }
-        
+
         _obs.features = features_buff[0..cnt];
         return true;
     }
