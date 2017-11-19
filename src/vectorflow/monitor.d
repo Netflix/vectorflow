@@ -70,7 +70,7 @@ class SGDMonitor {
         _buff_stdout_line = new char[240];
 
         if(with_loss_)
-            _pattern = 
+            _pattern =
             "Progress: %s | Elapsed: %s | Remaining: %s | %04d passes " ~
             "| Loss: %.4e | %.2e obs/sec | %.2e features/sec";
         else

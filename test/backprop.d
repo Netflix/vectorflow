@@ -32,12 +32,12 @@ unittest {
     foreach(i; 0..l2.W.length)
         foreach(j; 0..l2.W[i].length)
             l2.W[i][j] = 2.0;
-    
+
 
     nn.predict([1.0f, 1.0f]);
     double tanh2 = (exp(4.0) - 1)/(exp(4.0) + 1);
     assert(fequal(nn.output[0], 40 * tanh2, 1e-5));
-    
+
     nn.backward_prop([1.0f]);
     assert(fequal(l2.grad[0][0], tanh2, 1e-5));
 

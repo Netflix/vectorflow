@@ -32,7 +32,7 @@ unittest {
         }
 
         override void rewind(){_cnt = 0;}
-        
+
         override @property D save()
         {
             auto cp = new D();
@@ -56,7 +56,7 @@ unittest {
     assert(sum == 6);
 
     d.cache();
-    
+
     sum = 0;
     foreach(v; d)
         sum += v;

@@ -126,7 +126,7 @@ unittest {
     assert(l.out_s.length == 4);
     assert(l.out_s[$-1].id == (123 ^ 456 ^ 789));
     assert(fequal(l.out_s[$-1].val, 1.3 * (-2.7) * 0.2));
-    
+
     // bag cf order 2: 3 hashes for bag 1
     nn.predict([SparseFG(123, 1.3f, 1), SparseFG(456, -2.7f, 2), SparseFG(789, 0.4f, 1), SparseFG(333, -9.1f, 1)]);
     assert(l.out_s.length == 7);
@@ -161,7 +161,7 @@ unittest {
         .stack(DenseData(3))
         .stack(l);
     nn.initialize(0.0);
-    
+
     // forward prop test
     auto x = [1.3f, -2.7f, 0.1f];
     auto preds = nn.predict(x);

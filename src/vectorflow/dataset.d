@@ -1,6 +1,6 @@
 /**
  This module provides utility classes to iterate over data.
- 
+
  It is not mandatory to use them when using vectorflow, but you might find them
  useful and slightly more intuitive to use than the built-in range mechanism if
  you're a beginner with D.
@@ -12,7 +12,7 @@
  std.range.evenChunks, which might or might not work depending on your
  specific reader. To explicitly shard the data, just specify an `evenChunks`
  function in your reader implementation (see MultiFilesReader for an example).
- 
+
  Copyright: 2017 Netflix, Inc.
  License: $(LINK2 http://www.apache.org/licenses/LICENSE-2.0, Apache License Version 2.0)
  */
@@ -110,7 +110,7 @@ class MultiFilesReader(T)
                     result = dg(obs);
                     if(result)
                         break;
-                }                
+                }
             }
         }
         rewind();

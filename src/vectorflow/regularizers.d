@@ -21,7 +21,7 @@ import vectorflow.utils;
 abstract class LinearPrior
 {
     /// pointer to the layer weight matrix
-    float[][] W; 
+    float[][] W;
     /// pointer to the layer gradient matrix
     float[][] grad;
     /// pointer to the optimizer for this layer
@@ -32,7 +32,7 @@ abstract class LinearPrior
         W = layer.W;
         grad = layer.grad;
         if(layer.optimizer is null)
-           return; 
+           return;
         if(auto o = cast(SGDOptimizer)(layer.optimizer))
             opt = o;
         else
@@ -156,7 +156,7 @@ class L2Prior : AdditiveLinearPrior
             foreach(k; 0..W.length)
                 l2op_scal(_lambda, W[k], W_prior[k], grad[k], _ind_start);
         }
-        
+
         void _acc_grad_vec()
         {
             foreach(k; 0..W.length)
