@@ -730,16 +730,8 @@ class NeuralNet {
     }
 }
 
-package template isFeaturesField(string s)
-{
-    enum isFeaturesField = s.startsWith("features");
-}
-
-package template isLearnableRow(T)
-{
-    enum isLearnableRow = anySatisfy!(
-            isFeaturesField, __traits(allMembers, T));
-}
+package enum isFeaturesField(string s) = s.startsWith("features");
+package enum isLearnableRow(T) = anySatisfy!(isFeaturesField, __traits(allMembers, T));
 
 
 private void optimize_graph(NeuralNet net)
