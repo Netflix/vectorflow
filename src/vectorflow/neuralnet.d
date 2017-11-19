@@ -590,10 +590,8 @@ class NeuralNet {
     void serialize(string path)
     {
         auto f = File(path, "w");
-        scope(exit) f.close();
         scope(failure)
         {
-            f.close();
             try
             {
                 writeln("Serialization failed.");
@@ -605,6 +603,7 @@ class NeuralNet {
                         "` after serialization failure: ", e);
             }
         }
+        scope(exit) f.close();
 
         auto ser = new Serializer(&f);
 
