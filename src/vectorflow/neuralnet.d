@@ -130,7 +130,7 @@ class NeuralNet {
             if(opt !is null)
                 throw new Exception(
                     "A root is not learnable, it cannot have an optimizer.");
-            add_root(cast(InputLayer)layer);
+            add_root(layer.to!InputLayer);
         }
         else
         {
@@ -672,7 +672,7 @@ class NeuralNet {
         foreach(l; layers)
         {
             if(l.name in root_names)
-                nn.add_root(cast(InputLayer)l);
+                nn.add_root(l.to!InputLayer);
             else
                 nn.add(l);
         }

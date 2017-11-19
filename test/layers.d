@@ -28,7 +28,7 @@ unittest {
     nn.serialize("tmp_test");
     auto nn2 = NeuralNet.deserialize("tmp_test");
 
-    auto l2 = cast(Linear)nn2.layers[1];
+    auto l2 = nn2.layers[1].to!Linear;
 
     // assert that all weights are equal
     assert(l1.W.length == l2.W.length);
@@ -48,7 +48,7 @@ unittest {
     nn.initialize(0.0);
 
     assert(nn.layers.length == 2);
-    auto l = cast(Linear)nn.layers[$-1];
+    auto l = nn.layers[$-1].to!Linear;
     assert(l.W.length == 1);
     assert(l.W[0].length == 123 + 1);
 }
@@ -62,11 +62,11 @@ unittest {
     nn.initialize(0.0);
 
     assert(nn.layers.length == 4);
-    auto l = cast(Linear)nn.layers[$-1];
+    auto l = nn.layers[$-1].to!Linear;
     assert(l.W.length == 2);
     assert(l.W[1].length == 10 + 1);
 
-    l = cast(Linear)nn.layers[1];
+    l = nn.layers[1].to!Linear;
     assert(l.W.length == 10);
     assert(l.W[4].length == 20 + 1);
 }
@@ -78,7 +78,7 @@ unittest {
     nn.initialize(0.0);
 
     assert(nn.layers.length == 2);
-    auto l = cast(Linear)nn.layers[$-1];
+    auto l = nn.layers[$-1].to!Linear;
     assert(l.W.length == 1);
     assert(l.W[0].length == 3);
 }
@@ -139,7 +139,7 @@ unittest {
     // test serialization
     scope(exit) remove("tmp_test");
     nn.serialize("tmp_test");
-    auto l2 = cast(SparseKernelExpander)(NeuralNet.deserialize("tmp_test").layers[0]);
+    auto l2 = NeuralNet.deserialize("tmp_test").layers[0].to!SparseKernelExpander;
     assert(l._cross_features_str == l2._cross_features_str);
     assert(l._max_group_id == l2._max_group_id && l2._max_group_id == 888);
     assert(l._buff_single_feats_sz == l2._buff_single_feats_sz && l2._buff_single_feats_sz == 999);
@@ -223,7 +223,7 @@ unittest {
     // test serialization
     scope(exit) remove("tmp_test");
     nn.serialize("tmp_test");
-    auto l2 = cast(DropOut)(NeuralNet.deserialize("tmp_test").layers[1]);
+    auto l2 = NeuralNet.deserialize("tmp_test").layers[1].to!DropOut;
     assert(fequal(l2._drop_rate, 0.3));
 
     //backward prop for dense case
