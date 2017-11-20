@@ -603,7 +603,6 @@ class NeuralNet {
                         "` after serialization failure: ", e);
             }
         }
-        scope(exit) f.close();
 
         auto ser = new Serializer(&f);
 
@@ -639,9 +638,6 @@ class NeuralNet {
         if(!exists(path))
             throw new Exception("File does not exists: " ~ path);
         auto f = File(path, "r");
-        scope(exit) f.close();
-        scope(failure) f.close();
-
         auto nn = new NeuralNet();
 
         auto deser = new Serializer(&f);
