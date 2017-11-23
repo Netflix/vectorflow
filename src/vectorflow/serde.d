@@ -96,7 +96,7 @@ class Serializer {
             try{ layer_type = read!string(); }
             catch(EOFException e){ break; } 
 
-            auto l = cast(NeuralLayer)Object.factory(layer_type);
+            auto l = Object.factory(layer_type).to!NeuralLayer;
             l.deser(this);
             layers ~= l;
             writeln("Deserialized ", l.to!string);

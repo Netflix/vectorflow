@@ -15,6 +15,8 @@ import vectorflow.neurallayer;
 unittest {
     void same_topology(NeuralNet a, NeuralNet b, bool shallow)
     {
+        import std.conv : to;
+
         assert(a.layers.length == b.layers.length);
         assert(a.leaves.length == b.leaves.length);
         foreach(i, ref l1; b.layers)
@@ -33,7 +35,7 @@ unittest {
                     assert(l2.backgrads[j].length == l1.backgrads[j].length);
                 if(auto l1l = cast(Linear)l1)
                 {
-                    auto l2l = cast(Linear)l2;
+                    auto l2l = l2.to!Linear;
                     assert(l1l.grad.length == l2l.grad.length);
                     assert(l1l.W.length == l2l.W.length);
                 }

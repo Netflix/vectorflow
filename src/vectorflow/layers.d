@@ -199,7 +199,7 @@ class Linear : NeuralLayer {
 
     override void share_params(NeuralLayer l)
     {
-        auto c = cast(Linear)l;
+        auto c = l.to!Linear;
         W = c.W;
         _with_intercept = c.with_intercept;
     }
@@ -861,7 +861,7 @@ class SparseKernelExpander : InputLayer
 
     override void share_params(NeuralLayer l)
     {
-        auto c = cast(SparseKernelExpander)l;
+        auto c = l.to!SparseKernelExpander;
         input = c.input;
     }
 }
@@ -905,7 +905,7 @@ class Data(alias TYPE) : InputLayer
 
     override void share_params(NeuralLayer l)
     {
-        auto c = cast(Data!TYPE)l;
+        auto c = l.to!(Data!TYPE);
         input = c.input;
     }
 }

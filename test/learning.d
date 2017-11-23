@@ -170,8 +170,10 @@ unittest{
     // shallow copy of the net, which is what is passed as `net` argument.
     auto callback = delegate float(NeuralNet net, ref ObsD o, ref float[] grads)
     {
+        import std.conv : to;
+
         auto pred = net.layers[$-1].out_d[0];
-        auto W_inner = (cast(Linear)net.layers[1]).W;
+        auto W_inner = net.layers[1].to!Linear.W;
         assert(W_inner.length == 2);
         if(o.label > 0)
             grads[0] = W_inner[1][2] * W_inner[0][3];

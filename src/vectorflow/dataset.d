@@ -65,7 +65,7 @@ class DataFileReader(T) : DataReader!T
     protected override void share_save_params(DataReader!T e)
     {
         super.share_save_params(e);
-        _f.seek((cast(DataFileReader!T)e)._f.tell);
+        _f.seek(e.to!(DataFileReader!T)._f.tell);
     }
 }
 
