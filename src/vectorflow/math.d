@@ -100,3 +100,15 @@ else
 {
     mixin Functions!();
 }
+
+static this()
+{
+    // Enable flushing denormals to zero
+    enum FTZ_BIT = 15;
+
+    align(16) uint[128] state;
+    asm { fxsave state; }
+    uint mxcsr = state[6];
+    mxcsr |= 1 << FTZ_BIT;
+    asm { ldmxcsr mxcsr; }
+}
