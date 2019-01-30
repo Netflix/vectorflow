@@ -106,8 +106,13 @@ static this()
     // Enable flushing denormals to zero
     enum FTZ_BIT = 15;
 
-    align(16) uint[128] state;
-    asm { fxsave state; }
+    // Manually align to 16 bytes - https://issues.dlang.org/show_bug.cgi?id=16098
+    uint[128 + 4] buf;
+    auto state = cast(uint*)((cast(size_t)buf.ptr + 0xF) & ~size_t(0xF));
+    version (X86_64)
+        asm { mov RAX, state; fxsave 0[RAX]; }
+    else
+        asm { mov EAX, state; fxsave 0[EAX]; }
     uint mxcsr = state[6];
     mxcsr |= 1 << FTZ_BIT;
     asm { ldmxcsr mxcsr; }
