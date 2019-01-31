@@ -101,6 +101,13 @@ else
     mixin Functions!();
 }
 
+version (X86)
+    version = X86_Any;
+else
+version (X86_64)
+    version = X86_Any;
+
+version (X86_Any)
 static this()
 {
     // Enable flushing denormals to zero
