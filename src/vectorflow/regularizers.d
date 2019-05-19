@@ -350,6 +350,11 @@ class RotationPrior : AdditiveLinearPrior
             auto ri = W[i];
             auto rj = W[j];
             float g = dotProd(ri, rj);
+            import std.math : isNaN;
+            if (isNaN(g))
+            {
+                throw new Exception("Internal math error: Got NaN result from dotProd()");
+            }
             if(i != j)
             {
                 foreach(u; 0..W[i].length)
