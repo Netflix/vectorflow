@@ -88,7 +88,12 @@ class Linear : NeuralLayer {
                 final switch(l.type)
                 {
                     case LayerT.DENSE:
-                        dp += dotProd(row[offset..offset+l.dim_out], l.out_d);
+                        auto dp_ret = dotProd(row[offset..offset+l.dim_out], l.out_d);
+                        import std.math : isNaN;
+                        if (isNaN(dp_ret)) {
+                            throw new Exception("Got NaN dotProd() on layer " ~ l.toString);
+                        }
+                        dp += dp_ret;
                         break;
                     
                     case LayerT.SPARSE:
