@@ -522,10 +522,14 @@ class ADAM : SGDOptimizer {
                 float[] row_W, float[] row_S, float[] row_M,
                 float beta1_, float beta2_, float eps_, float lr_) pure
         {
-            float k1 = 1.0/(1.0 - beta1_);
-            float k2 = 1.0/(1.0 - beta2_);
-            for(int i = 0; i < row_W.length; ++i)
-                row_W[i] -= lr_ * k1 * row_M[i] / (sqrt(k2 * row_S[i]) + eps_);
+            double k1 = 1.0L / (1.0L - beta1_);
+            double k2 = 1.0L / (1.0L - beta2_);
+            for(int i = 0; i < row_W.length; ++i) {
+                double v1 = lr_ * k1 * row_M[i] ;
+                double v2 = sqrt(k2 * row_S[i]) + eps_;
+                double q = v1 / v2;
+                row_W[i] -= q;
+            }
         }
     }
 
