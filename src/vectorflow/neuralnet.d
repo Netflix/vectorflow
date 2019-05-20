@@ -750,8 +750,5 @@ private void optimize_graph(NeuralNet net)
 
 version(assert)
 {
-    static this()
-    {
-        ct_msg!("Non-release build.");
-    }
+    mixin ct_msg!("Non-release build.");
 }

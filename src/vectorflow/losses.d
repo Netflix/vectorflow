@@ -66,7 +66,7 @@ auto get_grad(T, alias WITH_VAL, V...)(string loss, V args)
             " attribute.");
 
     static if(__traits(hasMember, T, "weight"))
-        ct_msg!("Using `weight` attribute to perform weighted MLE inference");
+        mixin ct_msg!("Using `weight` attribute to perform weighted MLE inference");
     switch(loss)
     {
         case "logistic":

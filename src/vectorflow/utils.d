@@ -255,7 +255,7 @@ final class Hasher {
     }
 }
 
-package static void ct_msg(string msg)()
+package mixin template ct_msg(string msg)
 {
     pragma(msg, "[VECTORFLOW-COMPILE] " ~ msg);
 }

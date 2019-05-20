@@ -100,3 +100,29 @@ else
 {
     mixin Functions!();
 }
+
+version (X86)
+    version = X86_Any;
+else
+version (X86_64)
+    version = X86_Any;
+
+version (X86_Any)
+static this()
+{
+    // Enable flushing denormals to zero
+    enum FTZ_BIT = 15;
+    enum DAZ_BIT = 6;
+
+    // Manually align to 16 bytes - https://issues.dlang.org/show_bug.cgi?id=16098
+    uint[128 + 4] buf;
+    auto state = cast(uint*)((cast(size_t)buf.ptr + 0xF) & ~size_t(0xF));
+    version (X86_64)
+        asm { mov RAX, state; fxsave 0[RAX]; }
+    else
+        asm { mov EAX, state; fxsave 0[EAX]; }
+    uint mxcsr = state[6];
+    mxcsr |= 1 << FTZ_BIT;
+    mxcsr |= 1 << DAZ_BIT;
+    asm { ldmxcsr mxcsr; }
+}
