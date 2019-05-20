@@ -227,7 +227,8 @@ class NeuralNet {
     * Compute the prediction of the net when passing the arguments to the
     * root(s) of the net.
     *
-    * Params: the data to feed to the roots in proper order
+    * Params:
+    *    args = the data to feed to the roots in proper order
     *
     * Returns: array of last layer neurons values
     *
