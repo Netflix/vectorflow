@@ -122,7 +122,7 @@ class RCV1Reader : DataFileReader!(Obs) {
         auto lab_end = countUntil(buff, "  ");
         if(lab_end == -1)
             return false;
-        auto label = labels[buff[0..lab_end].to!size_t];
+        auto label = labels[to_long(buff[0..lab_end]).to!size_t];
         _obs.label = label;
         size_t cnt = 0;
 
