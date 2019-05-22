@@ -39,7 +39,7 @@ auto load_data()
     {
         auto root_url = "http://ae.nflximg.net/vectorflow/";
         auto url_data = root_url ~ "lyrl2004_vectors_";
-        auto url_topics = root_url ~ "rcv1v2.topics.qrels.gz"; 
+        auto url_topics = root_url ~ "rcv1v2.topics.qrels.gz";
         mkdir(data_dir);
         import std.net.curl;
         import std.process;
@@ -87,7 +87,7 @@ bool[] load_labels(string cat_name)
         {
             toks.popFront();
             auto ind = to_long(toks.front);
-            labels[ind] = true;
+            labels[ind.to!size_t] = true;
         }
     }
     return labels;
@@ -122,9 +122,9 @@ class RCV1Reader : DataFileReader!(Obs) {
         auto lab_end = countUntil(buff, "  ");
         if(lab_end == -1)
             return false;
-        auto label = labels[to_long(buff[0..lab_end])];
+        auto label = labels[to_long(buff[0..lab_end]).to!size_t];
         _obs.label = label;
-        ulong cnt = 0;
+        size_t cnt = 0;
 
         foreach(t; splitter(buff[lab_end+2..$], ' '))
         {
@@ -135,7 +135,7 @@ class RCV1Reader : DataFileReader!(Obs) {
             auto feat_val = to_float(t[feat_id_end+1..$]);
             features_buff[cnt++] = SparseF(feat_id, feat_val);
         }
-        
+
         _obs.features = features_buff[0..cnt];
         return true;
     }
