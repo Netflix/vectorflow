@@ -8,8 +8,8 @@ module vectorflow.neuralnet;
 
 private
 {
-import std.algorithm : canFind, countUntil, map, startsWith, sum;
-import std.array : split;
+import std.algorithm : canFind, countUntil, map, sort, startsWith, sum;
+import std.array;
 import std.conv : text, to;
 import std.file : exists, FileException, remove;
 import std.format : format;
@@ -616,7 +616,7 @@ class NeuralNet {
 
         // serialize edges
         ser.write(edges.length.to!ulong);
-        foreach(p; edges.byKeyValue())
+        foreach(p; edges.byKeyValue().array.sort!((x, y) => x.key < y.key))
         {
             ser.write(p.value.length.to!ulong);
             foreach(child; p.value)
@@ -678,7 +678,7 @@ class NeuralNet {
                 nn.add(l);
         }
 
-        foreach(p; edges.byKeyValue())
+        foreach(p; edges.byKeyValue().array.sort!((x, y) => x.key < y.key))
             foreach(child; p.value)
                 nn.wire(p.key, child, false);
         foreach(l; nn.layers)
