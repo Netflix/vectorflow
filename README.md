@@ -11,7 +11,7 @@ Original blog post [here](https://medium.com/@NetflixTechBlog/introducing-vector
 #### dub package
 The library is distributed as a [`dub`](https://code.dlang.org/) package. Add `vectorflow` to the `dependencies` section of your `dub.json`:
 ```
-"vectorflow": "~>1.0.0"
+"vectorflow": "~>1.0.2"
 ```
 
 The library itself doesn't have any dependencies. All you need is a recent D compiler.
