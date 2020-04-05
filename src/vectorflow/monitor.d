@@ -13,7 +13,7 @@ import std.algorithm : max, filter, sum;
 import std.array;
 import std.conv : to;
 import std.format : format, sformat;
-import std.math : lround;
+import std.math : round;
 import std.stdio : stdout;
 
 import vectorflow.math : fabs;
@@ -93,7 +93,7 @@ class SGDMonitor {
     private char[] get_progress_bar(float percentage)
     {
         _bar_buff[1..51] = ' ';
-        auto num_finished = lround(percentage * 50).to!size_t;
+        auto num_finished = round(percentage * 50).to!size_t;
         if(num_finished >= 1)
             _bar_buff[1..num_finished+1] = 'o';
         auto end = sformat(_bar_buff[52..100],
@@ -149,7 +149,7 @@ class SGDMonitor {
         if(percent > 0 && percent < 1)
         {
             auto remaining_secs = seconds / percent - seconds;
-            auto remaining_dur = dur!"seconds"(lround(remaining_secs));
+            auto remaining_dur = dur!"seconds"(round(remaining_secs).to!long);
             predict_remaining = time_clock_str(remaining_dur, false);
         }
         char[] line;
@@ -157,14 +157,14 @@ class SGDMonitor {
         if(with_loss)
         {
             line = sformat(_buff_stdout_line, _pattern,
-                bar, time, predict_remaining, lround(avg_passes),
+                bar, time, predict_remaining, round(avg_passes).to!long,
                 avg_loss_per_ex,
                 total_ex_seen / seconds, total_feats_seen / seconds);
         }
         else
         {
             line = sformat(_buff_stdout_line, _pattern,
-                bar, time, predict_remaining, lround(avg_passes),
+                bar, time, predict_remaining, round(avg_passes).to!long,
                 total_ex_seen / seconds, total_feats_seen / seconds);
         }
         stdout.write(line);
