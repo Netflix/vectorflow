@@ -52,14 +52,32 @@ class Serializer {
     final T read(T)() if(isSomeString!T || isBasicType!T || isUnsigned!T)
     {
         scope(failure){ if(_f.eof) throw new EOFException("");}
-        scope(exit){ if(_f.eof) throw new EOFException("");}
+        version(Windows){} // Windows requires special treatment with EOF
+        else scope(exit){ if(_f.eof) throw new EOFException(""); }
         static if(isSomeString!T)
         {
-            ulong str_sz;
-            _f.rawRead((&str_sz)[0..1]);
-            auto str = new ubyte[str_sz.to!size_t];
-            str = _f.rawRead(str);
-            return cast(string)str;
+            // On Windows EOF is not set before you try to read past the end, so it requires some special handling
+            // Original code was causing runtime crashes rendering deserialization impossible.
+            // If we use more low level approach and manually throw EOFException if we can't read elemnts it works.
+            version(Windows)
+            {
+                import core.stdc.stdio : fread;
+                ulong str_sz;
+                auto sz = fread(&str_sz, str_sz.sizeof, 1, _f.getFP);
+                if(sz < 1) throw new EOFException("");
+                auto str = new ubyte[str_sz.to!size_t];
+                sz = fread(str.ptr, ubyte.sizeof, str_sz, _f.getFP);
+                if(sz < str_sz) throw new EOFException("");
+                return cast(string)str;
+            }
+            else
+            {
+                ulong str_sz;
+                _f.rawRead((&str_sz)[0..1]);
+                auto str = new ubyte[str_sz.to!size_t];
+                str = _f.rawRead(str);
+                return cast(string)str;
+            }
         }
         else
         {
