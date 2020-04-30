@@ -44,7 +44,7 @@ mixin template Functions()
     static void relu(float[] x, float[] y) pure @nogc
     {
         for(int i = 0; i < x.length; ++i)
-            y[i] = fmax(0, x[i]);
+            y[i] = fmax(0.0f, x[i]);
     }
 
     static void axpy(float a, float[] x, float[] y) pure @nogc
