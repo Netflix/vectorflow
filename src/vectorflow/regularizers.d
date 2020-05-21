@@ -252,9 +252,9 @@ class L1Prior : ProxyLinearPrior
             for(auto i = _ind_start; i < W[k].length; ++i)
             {
                 if(W[k][i] > W_prior[k][i])
-                    W[k][i] = fmax(0, W[k][i] - W_prior[k][i] - _lambda * opt.current_lr(k,i));
+                    W[k][i] = fmax(0.0f, W[k][i] - W_prior[k][i] - _lambda * opt.current_lr(k,i));
                 else
-                    W[k][i] = -fmax(0, -W[k][i] + W_prior[k][i] - _lambda * opt.current_lr(k,i));
+                    W[k][i] = -fmax(0.0f, -W[k][i] + W_prior[k][i] - _lambda * opt.current_lr(k,i));
             }
         }
     }
