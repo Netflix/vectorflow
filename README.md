@@ -4,7 +4,7 @@
 
 Original blog post [here](https://medium.com/@NetflixTechBlog/introducing-vectorflow-fe10d7f126b8).
 
-[![Build Status](https://travis-ci.org/Netflix/vectorflow.svg?branch=master)](https://travis-ci.org/Netflix/vectorflow)
+[![Build Status](https://travis-ci.com/Netflix/vectorflow.svg?branch=master)](https://travis-ci.com/Netflix/vectorflow)
 
 ### Installation
 
