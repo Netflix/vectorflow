@@ -1,0 +1,11 @@
+.dub/
+*~
+docs/
+docs.json
+examples/.dub/
+examples/mnist
+examples/mnist_data/
+examples/rcv1
+examples/rcv1_data/
+libvectorflow.a
+vectorflow-test-unittest
