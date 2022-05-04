@@ -90,7 +90,7 @@ class Linear : NeuralLayer {
                     case LayerT.DENSE:
                         dp += dotProd(row[offset..offset+l.dim_out], l.out_d);
                         break;
-                    
+
                     case LayerT.SPARSE:
                         foreach(ref f; l.out_s)
                             dp += row[offset + f.id] * f.val;
@@ -107,7 +107,7 @@ class Linear : NeuralLayer {
         // gradient
         foreach(k; 0..dim_out)
         {
-            auto row = grad[k]; 
+            auto row = grad[k];
             float g = ext_grad[k];
             _accumulate_grad_row(row, g, k);
         }
@@ -147,7 +147,7 @@ class Linear : NeuralLayer {
             foreach(ref SparseF fg; ext_grad)
                 axpy(fg.val, W[fg.id][offset..offset+b.length], b);
             offset += b.length;
-        }   
+        }
     }
 
     final protected void _accumulate_grad_row(float[] row, float g, ulong index)
@@ -166,7 +166,7 @@ class Linear : NeuralLayer {
             }
             offset += l.dim_out;
         }
-        row[0] += _with_intercept * g;        
+        row[0] += _with_intercept * g;
     }
 
     override void serialize(Serializer s)
@@ -193,7 +193,7 @@ class Linear : NeuralLayer {
             cp.priors ~= p.dup;
         if(prox !is null)
             cp.prox = prox.dup;
-              
+
         return cp;
     }
 
@@ -262,7 +262,7 @@ class DropOut : NeuralLayer {
         auto all_sparse = parents.all!(x => x.type == LayerT.SPARSE);
         if(!all_dense && !all_sparse)
             throw new Exception(
-                "DropOut layer parents have all to be of the same kind " ~ 
+                "DropOut layer parents have all to be of the same kind " ~
                 "(sparse or dense outputs).");
         if(all_dense)
         {
@@ -309,7 +309,7 @@ class DropOut : NeuralLayer {
             offset += p.dim_out;
         }
     }
-    
+
     void _predict_train_sparse()
     {
         // @TODO: this is currently very slow because of allocations
@@ -709,7 +709,7 @@ class SparseKernelExpander : InputLayer
     {
         super(dim_out, LayerT.SPARSE);
         _learnable = false;
-        
+
         if(max_group_id > ushort.max)
             throw new Exception(
                 "Doesn't support group ids bigger than %d".format(ushort.max));
@@ -925,7 +925,7 @@ class DenseData : Data!(LayerT.DENSE)
     {
         super(dim_out);
     }
-    mixin opCallNew; 
+    mixin opCallNew;
 }
 
 /**

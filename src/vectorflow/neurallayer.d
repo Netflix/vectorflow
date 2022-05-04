@@ -86,7 +86,7 @@ abstract class NeuralLayer {
                 backgrads ~= new float[p.dim_out];
             else
                 backgrads ~= new float[0];
-        }        
+        }
     }
     void allocate_params(){}
     void allocate_grad_params(){}
@@ -95,7 +95,7 @@ abstract class NeuralLayer {
     final @property optimizer_set(){return optimizer !is null;}
 
     this(){}
-    
+
     this(ulong dim_out_, LayerT type_)
     {
         dim_out = dim_out_.to!size_t;
@@ -174,7 +174,7 @@ abstract class NeuralLayer {
         dim_in = s.read!ulong().to!size_t;
         dim_out = s.read!ulong().to!size_t;
         type = s.read!string().to!LayerT;
-        
+
         deserialize(s);
     }
 
@@ -239,7 +239,7 @@ abstract class InputLayer : NeuralLayer
     }
 
     abstract override void predict();
-    
+
     override void accumulate_grad(V)(V[] grad) pure
         if ((is(V == float) || is(V == SparseF))) {}
 

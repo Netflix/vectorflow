@@ -137,7 +137,7 @@ class NeuralNet {
             if(layer.name == "")
                 layer.name = generate_name();
             if(layer.name in layers_map)
-                throw new Exception("A layer with the name `" ~ 
+                throw new Exception("A layer with the name `" ~
                         layer.name ~ "` already exist.");
             layers_map[layer.name] = layer;
             layers ~= layer;
@@ -200,7 +200,7 @@ class NeuralNet {
     *        which have the types expected by the roots in proper order
     *        (i.e: float[], SparseF[], SparseFG[], custom roots types...)
     *
-    * Returns: array of last layer neurons values 
+    * Returns: array of last layer neurons values
     *
     * Example:
     * ---
@@ -279,7 +279,7 @@ class NeuralNet {
     *    child = destination layer
     *    with_alloc = whether or not both layers should allocate internal
     *                 parameters
-    */    
+    */
     void wire(NeuralLayer parent, NeuralLayer child, bool with_alloc = true)
     {
         check_layer_here(parent.name);
@@ -317,7 +317,7 @@ class NeuralNet {
             else
                 leaves = leaves[0..ind_leaf] ~ leaves[ind_leaf+1..$];
         }
-        
+
         optimize_graph(this);
     }
 
@@ -336,7 +336,7 @@ class NeuralNet {
     *
     * Params:
     *    rand_scale = parameters values drawn in ]-rand_scale, rand_scale[
-    */ 
+    */
     void initialize(double rand_scale)
     {
         _ever_initialized = true;

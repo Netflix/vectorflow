@@ -1,7 +1,7 @@
 /**
  The library supports already implemented loss functions, as well as
  a callback-based way to specify a custom loss.
- 
+
  The losses pre-implemented are: `logistic`, `square`, `multinomial`.
 
  For these losses, if an attribute `.weight` is found in the row, it will
@@ -15,7 +15,7 @@
  `S` is `void` or numeric (float, double, int...).
     If numeric, the callback is expected to return the loss value on
     training sample `ex` for monitoring purposes.
-    
+
  `R` is `float[]` or `NeuralNet`. If `float[]`, the net is expected to have
     a single leaf and the callback receives the predictions of the leaf after
     forward-prop. If `NeuralNet`, the callback receives a reference of the net
@@ -40,7 +40,7 @@
         grads[0] = 1.0f;
     else
         grads[0] = -1.0f;
-    
+
     return fabs(pred - o.label); // return loss value so it's monitored
     // during training
  }

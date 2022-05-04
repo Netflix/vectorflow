@@ -24,7 +24,7 @@ auto load_data()
     import std.typecons;
     if(!exists(data_dir))
     {
-        auto root_url = "http://yann.lecun.com/exdb/mnist/"; 
+        auto root_url = "http://yann.lecun.com/exdb/mnist/";
         mkdir(data_dir);
         import std.net.curl;
         import std.process;

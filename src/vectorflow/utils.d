@@ -53,7 +53,7 @@ long to_long(T)(in T str) pure
 
 /**
 * Fast but unsafe function to parse a string into a float.
-* 
+*
 * If you trust your input, this is much faster than to!float.
 * Doesn't handle Inf numbers nor Nan, and doesn't throw exceptions.
 * Adapted from Phobos std.conv source code. See NOTICE for licence details.
@@ -223,9 +223,9 @@ final class Hasher {
         k1 *= c1;
         k1 = _rotl32(k1,15);
         k1 *= c2;
-        
+
         h1 ^= k1;
-        h1 = _rotl32(h1,13); 
+        h1 = _rotl32(h1,13);
         h1 = h1*5+0xe6546b64;
       }
 

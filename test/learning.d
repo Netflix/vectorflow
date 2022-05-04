@@ -42,7 +42,7 @@ unittest {
     auto dataS = fake_data_sparse(30, 83);
 
     foreach(net; nets(false))
-    { 
+    {
         auto calls = [
             delegate void() {net().learn(data, "logistic", AdaGrad(3, 0.1, 1));},
             delegate void() {net().learn(data, "logistic", AdaGrad(3, 0.1, 1), false, 2);},
@@ -54,7 +54,7 @@ unittest {
     }
 
     foreach(net; nets(true))
-    { 
+    {
         auto calls = [
             delegate void() {net().learn(dataS, "logistic", AdaGrad(3, 0.1, 25));},
             delegate void() {net().learn(dataS, "logistic", AdaGrad(2, 0.1, 1), false, 2);},
@@ -192,7 +192,7 @@ unittest{
 
 /// Multi roots learning
 unittest{
-    
+
     struct O1 {
         float label;
         float[] features;

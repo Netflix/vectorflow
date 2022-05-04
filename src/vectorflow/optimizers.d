@@ -88,7 +88,7 @@ class SGDOptimizer : Optimizer {
 
         auto monitor = new SGDMonitor(verbose, num_epochs, num_cores,
                 start_time, isNumeric!S);
-        
+
         void _learn(U)(NeuralNet net, U d, ulong n_passes, uint core_id)
         {
             foreach(l; net.layers)
@@ -225,7 +225,7 @@ class SGDOptimizer : Optimizer {
 /**
  AdaGrad stochastic optimizer.
 
- See $(LINK2 http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf, 
+ See $(LINK2 http://www.jmlr.org/papers/volume12/duchi11a/duchi11a.pdf,
  Adaptive Subgradient Methods for Online Learning and Stochastic Optimization)
 Examples:
 -----------------
@@ -247,7 +247,7 @@ class AdaGrad : SGDOptimizer {
 
     // local variables
     float eps;
-    float[][] acc_grad; 
+    float[][] acc_grad;
 
     void delegate(NeuralLayer, float[]) _update;
 
@@ -483,7 +483,7 @@ class ADAM : SGDOptimizer {
         {
             foreach(p; priors)
                 p.accumulate_grad();
-            update_matrix();            
+            update_matrix();
             if(prox !is null)
                 prox.proxy_step();
             beta1 *= beta1_0;

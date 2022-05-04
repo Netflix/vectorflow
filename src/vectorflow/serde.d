@@ -94,7 +94,7 @@ class Serializer {
         {
             string layer_type;
             try{ layer_type = read!string(); }
-            catch(EOFException e){ break; } 
+            catch(EOFException e){ break; }
 
             auto l = Object.factory(layer_type).to!NeuralLayer;
             l.deser(this);
