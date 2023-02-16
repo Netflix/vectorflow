@@ -83,14 +83,21 @@ class Linear : NeuralLayer {
             auto row = W[k];
             float dp = _with_intercept * row[0];
             auto offset = _with_intercept;
-            foreach(l; parents)
+            foreach(idx, l; parents)
             {
                 final switch(l.type)
                 {
                     case LayerT.DENSE:
-                        dp += dotProd(row[offset..offset+l.dim_out], l.out_d);
+                        auto dp_ret = dotProd(row[offset..offset+l.dim_out], l.out_d);
+                        import std.math : isNaN;
+                        if (isNaN(dp_ret))
+                        {
+                            import std.format;
+                            throw new Exception(format("Internal math error: Got NaN result from dotProd() on layer %d.", idx));
+                        }
+                        dp += dp_ret;
                         break;
-                    
+
                     case LayerT.SPARSE:
                         foreach(ref f; l.out_s)
                             dp += row[offset + f.id] * f.val;
