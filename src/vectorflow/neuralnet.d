@@ -591,10 +591,8 @@ class NeuralNet {
     void serialize(string path)
     {
         auto f = File(path, "w");
-        scope(exit) f.close();
         scope(failure)
         {
-            f.close();
             try
             {
                 writeln("Serialization failed.");
@@ -641,9 +639,6 @@ class NeuralNet {
         if(!exists(path))
             throw new Exception("File does not exists: " ~ path);
         auto f = File(path, "r");
-        scope(exit) f.close();
-        scope(failure) f.close();
-
         auto nn = new NeuralNet();
 
         auto deser = new Serializer(&f);
