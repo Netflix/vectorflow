@@ -240,10 +240,10 @@ abstract class InputLayer : NeuralLayer
 
     abstract override void predict();
     
-    override void accumulate_grad(V)(V[] grad) pure
+    void accumulate_grad(V)(V[] grad) pure
         if ((is(V == float) || is(V == SparseF))) {}
 
-    override void backward_prop(V)(V[] grad) pure
+    void backward_prop(V)(V[] grad) pure
         if ((is(V == float) || is(V == SparseF))) {}
 
     override @property ulong num_params(){return 0;}

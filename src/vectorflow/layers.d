@@ -473,7 +473,7 @@ class ReLU : NeuralLayer {
         }
     }
 
-    override void accumulate_grad(V)(V[] grad)
+    void accumulate_grad(V)(V[] grad)
         if ((is(V == float) || is(V == SparseF)))
     {
         ulong offset = 0;
